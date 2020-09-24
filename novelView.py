@@ -1,0 +1,64 @@
+import numpy as np
+import cv2
+import math
+import matplotlib.pyplot as plt
+
+# basic pan and zoom of any given image
+# input_img
+# centershift   with this set to 0--> zoom to the center of the image; otherwise shifted center of zoom
+# pixel_step    Pixel steps between frames of the image list
+# frameCount    Amount of frames
+
+
+def pan_zoom(input_img, centershift_x=0, centershift_y=0, pixel_step=2, frames=25):
+    img_list = []
+    int_height = input_img.shape[0]
+    int_width = input_img.shape[1]
+    flt_ratio = float(int_width) / float(int_height)
+
+    for i in range(0, frames):
+        height1 = i * pixel_step + i * centershift_y
+        height2 = int_height - i * pixel_step + i * centershift_y
+        width1 = int(i * flt_ratio * pixel_step) + int(i * flt_ratio * centershift_x)
+        width2 = int_width - int(i * flt_ratio * pixel_step) + int(i * flt_ratio * centershift_x)
+        if height1 < 0:
+            height1 = 0
+        if height2 > int_height:
+            height2 = int_height
+        if width1 < 0:
+            width1 = 0
+        if width2 > int_width:
+            width2 = int_width
+        img = input_img[height1: height2, width1: width2]
+        img = cv2.resize(img, (int_width, int_height), interpolation=cv2.INTER_AREA)
+        img_list.append(img)
+    return img_list
+
+
+# get image and masks to generate frames
+def add_parallax_masks(imgInput, imgBack, mask_list, centershift_x= 0, centershift_y= 0, step_obj=3, step_back=2, frames=25):
+    obj_list = []
+    vis_list = []  # list to visualize mask accuracy, not relevant to the script
+    save_back = imgBack
+    cv2.imwrite('./back.png', save_back)
+    back_list= pan_zoom(input_img=imgBack, centershift_x=centershift_x, centershift_y=centershift_y,
+                        pixel_step=step_back, frames=frames)
+    # mask is [0] for background and [255] for object
+    for i, mask_c in enumerate(mask_list):
+        if i >= step_obj:
+            i = step_obj
+        step_object = step_back + step_obj - i
+        obj_image = np.zeros(imgInput.shape, dtype=np.uint8)
+        obj_image[np.where(mask_c == 255)] = imgInput[np.where(mask_c == 255)]
+        vis_list.append(obj_image)
+        obj_zoom = pan_zoom(input_img=obj_image, centershift_x=centershift_x, pixel_step=step_object, frames=frames)
+        obj_list.append(obj_zoom)
+    print("length of obj_list", len(obj_list))
+    out_list = back_list
+    for obj in obj_list:
+        for i,frame in enumerate(out_list):
+            new_frame = frame
+            npy_Obj = obj[i]
+            new_frame[np.where(npy_Obj != [0, 0, 0])] = npy_Obj[np.where(npy_Obj != [0, 0, 0])]
+
+    return out_list, vis_list
