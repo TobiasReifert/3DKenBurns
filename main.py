@@ -8,7 +8,7 @@ import inpaint
 import stereo
 import numpy as np
 from datetime import datetime
-os.environ["IMAGEIO_FFMPEG_EXE"] = "/home/tobias/anaconda3/envs/oldtensor/bin/ffmpeg" # change path to ffmpeg package
+
 
 
 ###############################################
@@ -93,8 +93,7 @@ disparity_map= stereo.get_disparitymap(imgL=imgLdisp, imgR=imgRdisp)
 if vertical_flag == True:
     disparity_map = cv2.rotate(disparity_map, cv2.ROTATE_90_COUNTERCLOCKWISE)
 cv2.imwrite(disparity_path, disparity_map)
-#disparity_map1= stereo.get_disparitymap(imgL= npyImgL, imgR= npyImgR)
-#cv2.imwrite('/home/tobias/Pictures/Documentation/disp_set22_plus10.png'  ,disparity_map1)
+
 
 ###############################################
 # Image Segmentation to get object masks and write in MASK_FOLDER
