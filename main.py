@@ -15,8 +15,8 @@ os.environ["IMAGEIO_FFMPEG_EXE"] = "/home/tobias/anaconda3/envs/oldtensor/bin/ff
 # User input section
 vertical_flag = True # True if top / bottom images on a vertical shift, False for horizontal shift
 set_folder = 'set22'  # name of subfolder under path.home/Pictures/* with the stereo image set
-img1_name = 'bottom0.jpg'  # left or bottom picture. Primary view used for image segmentation
-img2_name = 'plus10.jpg'  # right or top picture
+img1_name = 'plus10.jpg'  # left or bottom picture. Primary view used for image segmentation
+img2_name = 'bottom0.jpg'  # right or top picture
 
 # Animation parameters
 centershift_x = 0  # centershift in x direction; 0 means zoom to the image center
