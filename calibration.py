@@ -44,18 +44,3 @@ np.save("../../Documents/camera_params/K", K)
 np.save("../../Documents/camera_params/dist", dist)
 np.save("../../Documents/camera_paramsrvecs", rvecs)
 np.save("../../Documents/camera_params/tvecs", tvecs)
-
-for i, image_docu in enumerate(docu_list):
-    cv2.imwrite("/../../Pictures/Documentation/calibration/set2_detect%i.png"%i, image_docu)
-
-# Get exif data in order to get focal length.
-exif_img = PIL.Image.open(calibration_paths[0])
-exif_data = {
- PIL.ExifTags.TAGS[k]:v
- for k, v in exif_img._getexif().items()
- if k in PIL.ExifTags.TAGS}
-# Get focal length in tuple form
-focal_length_exif = exif_data['FocalLength']
-# Get focal length in decimal form
-focal_length = focal_length_exif[0]/focal_length_exif[1]
-np.save("../../Documents/camera_params/FocalLength", focal_length)
