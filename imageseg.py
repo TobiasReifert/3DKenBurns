@@ -40,8 +40,10 @@ def sort_objects(mask_list_global, disparitymap):
     print(disparitymap.shape)
     for mask in mask_list_global:
         mask = cv2.resize(mask,disparitymap.shape[::-1])
-        disp= np.zeros(disparitymap.shape, np.uint8)
+        #disp= np.zeros(disparitymap.shape, np.uint8)
+        disp = np.zeros(disparitymap.shape, np.float)
         disp[mask == 255] = disparitymap[mask == 255]
+        disp[mask != 255] = np.nan
         mean = np.nanmean(disp)
         mean_list.append(mean)
         print("unsorted", mask[0])
@@ -49,12 +51,15 @@ def sort_objects(mask_list_global, disparitymap):
     mask_list = np.array(mask_list_global)
     mean_list = np.array(mean_list)
     inds = mean_list.argsort()
-    mask_sorted = mask_list[inds[::-1]]
+    print("Mean values sorted:", inds)
+    mask_sorted = mask_list[inds]
     for mask in mask_sorted:
         print("sorted", mask[0])
     return mask_sorted
 
-# Function for instance segmentation for a given filepath based on the example jupyter notebook of the Fizyr/keras-maskrcnn github repo
+
+# Function for instance segmentation for a given filepath based on the example jupyter notebook of the
+# Fizyr/keras-maskrcnn github repo
 def segmentation(imgpath, score_threshold = 0.5, binarize_threshold= 0.5):
     # Setting gpu to 0
     setup_gpu(0)

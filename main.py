@@ -70,8 +70,7 @@ print("img1 shape", npyImgL.shape)
 print("img2 shape", npyImgR.shape)
 
 ###############################################
-# Load camera parameters, get optimal camera matrix and undistort images
-ret = np.load('/home/tobias/Documents/camera_params/ret.npy')
+# Load camera parameters, get optimal camera matrix and undistort image
 K = np.load('/home/tobias/Documents/camera_params/K.npy')
 dist = np.load('/home/tobias/Documents/camera_params/dist.npy')
 h,w = npyImgL.shape[:2]
