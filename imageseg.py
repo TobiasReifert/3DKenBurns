@@ -40,7 +40,6 @@ def sort_objects(mask_list_global, disparitymap):
     print(disparitymap.shape)
     for mask in mask_list_global:
         mask = cv2.resize(mask,disparitymap.shape[::-1])
-        #disp= np.zeros(disparitymap.shape, np.uint8)
         disp = np.zeros(disparitymap.shape, np.float)
         disp[mask == 255] = disparitymap[mask == 255]
         disp[mask != 255] = np.nan

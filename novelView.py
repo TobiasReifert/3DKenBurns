@@ -45,9 +45,9 @@ def add_parallax_masks(imgInput, imgBack, mask_list, centershift_x= 0, centershi
                         pixel_step=step_back, frames=frames)
     # mask is [0] for background and [255] for object
     for i, mask_c in enumerate(mask_list):
-        if i >= step_obj:
-            i = step_obj
-        step_object = step_back + step_obj - i
+        if len(mask_list) <= 2:
+            i = i+2
+        step_object = step_back + step_obj + i  # increase the zooming speed with the pixel_step parameter for closer objects
         obj_image = np.zeros(imgInput.shape, dtype=np.uint8)
         obj_image[np.where(mask_c == 255)] = imgInput[np.where(mask_c == 255)]
         vis_list.append(obj_image)
