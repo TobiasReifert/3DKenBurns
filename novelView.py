@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # pixel_step    Pixel steps between frames of the image list
 # frameCount    Amount of frames
 
-
+# Pan and zoom over input image by adjusting speed, centershift and the amount of frames
 def pan_zoom(input_img, centershift_x=0, centershift_y=0, pixel_step=2, frames=25):
     img_list = []
     int_height = input_img.shape[0]
@@ -21,6 +21,7 @@ def pan_zoom(input_img, centershift_x=0, centershift_y=0, pixel_step=2, frames=2
         height2 = int_height - i * pixel_step + i * centershift_y
         width1 = int(i * flt_ratio * pixel_step) + int(i * flt_ratio * centershift_x)
         width2 = int_width - int(i * flt_ratio * pixel_step) + int(i * flt_ratio * centershift_x)
+        # limit height and width to image dimensions
         if height1 < 0:
             height1 = 0
         if height2 > int_height:
@@ -37,26 +38,30 @@ def pan_zoom(input_img, centershift_x=0, centershift_y=0, pixel_step=2, frames=2
 
 # get image and masks to generate frames
 def add_parallax_masks(imgInput, imgBack, mask_list, centershift_x= 0, centershift_y= 0, step_obj=3, step_back=2, frames=25):
-    obj_list = []
-    mask_zoom_list = []
+    obj_list = []  # list for the zoom video frame lists of the objects
+    mask_zoom_list = []  # list for the zoom video frame lists of the masks
     vis_list = []  # list to visualize mask accuracy, not relevant to the script
-    save_back = imgBack
+    # Base for the animation is the zooming of the background with the slowest speed
     back_list= pan_zoom(input_img=imgBack, centershift_x=centershift_x, centershift_y=centershift_y,
                         pixel_step=step_back, frames=frames)
     # mask is [0] for background and [255] for object
     for i, mask_c in enumerate(mask_list):
+        # When only 1 or 2 objects are detected adjust zoom speed
         if len(mask_list) <= 2:
             i = i+2
-        step_object = step_back + step_obj + i  # increase the zooming speed with the pixel_step parameter for closer objects
+        step_object = step_back + step_obj + i  # Increased zooming speed for closer objects
         obj_image = np.zeros(imgInput.shape, dtype=np.uint8)
-        obj_image[np.where(mask_c == 255)] = imgInput[np.where(mask_c == 255)]
-        vis_list.append(obj_image)
+        obj_image[np.where(mask_c == 255)] = imgInput[np.where(mask_c == 255)]  # object pixels on black background
+        vis_list.append(obj_image)  # Visualization
+        # zoom the object with increasing speed for closer objects
         obj_zoom = pan_zoom(input_img=obj_image, centershift_x=centershift_x, pixel_step=step_object, frames=frames)
+        # mask is also zoomed to use it for insertion on the background image
         mask_zoom = pan_zoom(input_img=mask_c, centershift_x=centershift_x, pixel_step=step_object, frames=frames)
         mask_zoom_list.append(mask_zoom)
         obj_list.append(obj_zoom)
     print("length of obj_list", len(obj_list))
     out_list = back_list
+    # insert object pixels on the background starting from the furthest object to avoid overlaps with closer objects
     for obj, mask_z in zip(obj_list, mask_zoom_list):
         for i,frame in enumerate(out_list):
             new_frame = frame

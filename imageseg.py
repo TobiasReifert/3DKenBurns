@@ -7,7 +7,6 @@ from keras_retinanet.utils.colors import label_color
 from keras_retinanet.utils.gpu import setup_gpu
 
 # imports
-import matplotlib.pyplot as plt
 import cv2
 import os
 import numpy as np
@@ -34,7 +33,7 @@ def mask_correction(imgInput, mask_list, box_list, iterations=10):
         mask_list_global_dil.append(mask_dilated)
     return mask_list_global_dil, mask_list_global
 
-
+# Sorting the objects from furthest to closest by calculating mean disparity for the objects
 def sort_objects(mask_list_global, disparitymap):
     mean_list = []
     print(disparitymap.shape)
@@ -42,18 +41,15 @@ def sort_objects(mask_list_global, disparitymap):
         mask = cv2.resize(mask,disparitymap.shape[::-1])
         disp = np.zeros(disparitymap.shape, np.float)
         disp[mask == 255] = disparitymap[mask == 255]
-        disp[mask != 255] = np.nan
+        disp[mask != 255] = np.nan  # avoid influence of mask size on mean disparity value
         mean = np.nanmean(disp)
         mean_list.append(mean)
-        print("unsorted", mask[0])
-        print(mean_list)
+        print("Unsorted mean list:",mean_list)
     mask_list = np.array(mask_list_global)
     mean_list = np.array(mean_list)
     inds = mean_list.argsort()
     print("Mean values sorted:", inds)
     mask_sorted = mask_list[inds]
-    for mask in mask_sorted:
-        print("sorted", mask[0])
     return mask_sorted
 
 

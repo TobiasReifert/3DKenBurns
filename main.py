@@ -14,9 +14,9 @@ from datetime import datetime
 ###############################################
 # User input section
 vertical_flag = True # True if top / bottom images on a vertical shift, False for horizontal shift
-set_folder = 'set21'  # name of subfolder under path.home/Pictures/* with the stereo image set
-img1_name = 'top3.jpg'  # left or bottom picture. Primary view used for image segmentation
-img2_name = 'top1.jpg'  # right or top picture
+set_folder = 'set29'  # name of subfolder under path.home/Pictures/* with the stereo image set
+img1_name = 'plus10.jpg'  # left or bottom picture. Primary view used for image segmentation
+img2_name = 'top0.jpg'  # right or top picture
 
 # Animation parameters
 centershift_x = 0  # centershift in x direction; 0 means zoom to the image center
@@ -124,9 +124,9 @@ inpainted_image = inpaint.inpainting(imgInput=npyImgL, mask_list=mask_list_c)
 multiobj_list, vis_mask_list = novelView.add_parallax_masks(imgInput=npyImgL, imgBack=inpainted_image,
                                              mask_list=mask_sorted, centershift_x=centershift_x,
                                              step_obj=step_object, step_back=step_background, frames=frameCount)
-for i, vismask in enumerate(vis_mask_list):
-    cv2.cvtColor(vismask, cv2.COLOR_BGR2RGB)
-    cv2.imwrite(str(VISUALIZE_FOLDER) + '/maskvis' + filename + set_folder + '_obj%i.png' % i, vismask)
+# for i, vismask in enumerate(vis_mask_list):
+#     cv2.cvtColor(vismask, cv2.COLOR_BGR2RGB)
+#     cv2.imwrite(str(VISUALIZE_FOLDER) + '/maskvis' + filename + set_folder + '_obj%i.png' % i, vismask)
 
 ###############################################
 # Animate Clip from picture list

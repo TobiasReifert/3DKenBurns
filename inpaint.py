@@ -1,6 +1,7 @@
 import cv2
 
 
+# Inpaint omissions behind the object masks
 def inpainting(imgInput, mask_list):
     dst= imgInput
     for mask_c in mask_list:

@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 import glob
 from tqdm import tqdm
-import PIL.ExifTags
-import PIL.Image
 
 chessboard_size = (7,9)
+# read images, set path to Calibration set
+calibration_paths = glob.glob('../../Pictures/Calibration/set2/*')
 
 # Define arrays to save detected points
 obj_points = []  # 3D points in real world space
@@ -16,9 +16,7 @@ objp[:,:2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1,2
 
 # define criteria for subpixel accuracy
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-docu_list=[]
-# read images
-calibration_paths = glob.glob('../../Pictures/Calibration/set2/*')
+
 # Iterate over images to find intrinsic matrix
 for image_path in tqdm(calibration_paths):
     # Load image
@@ -34,7 +32,6 @@ for image_path in tqdm(calibration_paths):
         obj_points.append(objp)
         img_points.append(corners)
         image = cv2.drawChessboardCorners(image,chessboard_size, corners, ret)
-        docu_list.append(image)
 
 # Calibrate camera
 ret, K, dist, rvecs, tvecs = cv2.calibrateCamera(obj_points, img_points,gray_image.shape[::-1], None, None)

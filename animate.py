@@ -2,6 +2,7 @@ import moviepy.editor
 import cv2
 
 
+# Generate 3D Ken Burns video file with the composed frames
 def gen_clip(images_list, clip_name, fps):
     out_list= []
     for image in images_list:
