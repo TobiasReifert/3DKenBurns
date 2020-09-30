@@ -1,6 +1,9 @@
 # 3DKenBurns
 
-This code can animate the 3D Ken Burns effect based on stereo image input. It is the result of a Bachelor's thesis project.
+This code can animate the 3D Ken Burns effect based on stereo image input.
+
+It is the result of a Bachelor's thesis project with the title <br>
+_"Smartphone Photography: Creating the 3D Ken Burns Effect by using Monocular Stereo Vision, Instance Segmentation and Image Inpainting"_.
 
 **Abstract of the thesis:**<br>
 The creation of 3D effects out of 2D images is mostly inaccessible for amateurs without professional photo editing software or specialized hardware for depth measurement.
@@ -23,7 +26,7 @@ In this thesis, a method that achieves 3D measurement to automatically synthesiz
 
 ## Instructions
 ### 1. Calibration
-_This step is only necessary if you use your own stereo pictures and not the examples._
+_This step is only necessary if you use your own stereo pictures and not the provided examples._
 
 1. Shoot chessboard calibration images with your camera and save them to a folder on your PC.
 
