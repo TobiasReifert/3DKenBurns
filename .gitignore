@@ -1,3 +1,9 @@
+# Resnet weights
+3DKenBurns/resnet50_weights/
+
+# Output folder
+outputs/
+
 # Editors
 .vscode/
 .idea/
