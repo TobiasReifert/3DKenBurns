@@ -1,5 +1,6 @@
 import cv2
 import os
+os.environ["IMAGEIO_FFMPEG_EXE"] = "~/anaconda3/envs/3DKenBurns/bin/ffmpeg"
 from pathlib import Path
 import animate
 import novelView

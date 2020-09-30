@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 # pixel_step    Pixel steps between frames of the image list
 # frameCount    Amount of frames
 
+
 # Pan and zoom over input image by adjusting speed, centershift and the amount of frames
 def pan_zoom(input_img, centershift_x=0, centershift_y=0, pixel_step=2, frames=25):
     img_list = []
