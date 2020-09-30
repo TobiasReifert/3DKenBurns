@@ -1,6 +1,6 @@
 # 3DKenBurns
 
-This code can animate the 3D Ken Burns effect based on stereo image input.
+This code animates the 3D Ken Burns effect for still images based on stereo image input.
 
 It is the result of a Bachelor's thesis project with the title <br>
 _"Smartphone Photography: Creating the 3D Ken Burns Effect by using Monocular Stereo Vision, Instance Segmentation and Image Inpainting"_.
