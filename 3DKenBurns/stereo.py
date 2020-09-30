@@ -1,5 +1,5 @@
-import numpy as np
 import cv2
+import numpy as np
 
 
 # Function that Downsamples image reduce_factor number of times
@@ -22,10 +22,10 @@ def get_disparitymap(imgL, imgR):
     img_2_downsampled = downsample_image(imgR, 3)
 
     # Set disparity parameters
-    win_size = 5 # winsize default 3; 5; odd number usually between 3...11
+    win_size = 5  # winsize default 3; 5; odd number usually between 3...11
     min_disp = -1
-    max_disp = 63  # min_disp * 9
-    num_disp = max_disp - min_disp  # max_disp has to be dividable by 16 f. E. HH 192, 256
+    max_disp = 63
+    num_disp = max_disp - min_disp  # num_disp has to be dividable by 16 f. E. HH 192, 256
 
     # Create Block matching object
     stereo = cv2.StereoSGBM_create(minDisparity=min_disp,
@@ -45,4 +45,3 @@ def get_disparitymap(imgL, imgR):
     normalizedDisp = cv2.normalize(src=disparity_map, dst=disparity_map, beta=0, alpha=255, norm_type=cv2.NORM_MINMAX)
     normalizedDisp = np.uint8(normalizedDisp)
     return normalizedDisp
-
