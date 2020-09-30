@@ -5,7 +5,6 @@ import numpy as np
 from keras_maskrcnn import models
 from keras_maskrcnn.utils.visualization import draw_mask
 from keras_retinanet.utils.colors import label_color
-from keras_retinanet.utils.gpu import setup_gpu
 from keras_retinanet.utils.image import read_image_bgr, preprocess_image, resize_image
 from keras_retinanet.utils.visualization import draw_box, draw_caption
 
@@ -51,8 +50,6 @@ def sort_objects(mask_list_global, disparitymap):
 # Function for instance segmentation for a given filepath based on the example jupyter notebook of the
 # Fizyr/keras-maskrcnn github repo
 def segmentation(imgpath, score_threshold=0.5, binarize_threshold=0.5):
-    # Setting gpu to 0
-    setup_gpu(0)
     # adjust this to point to your downloaded/trained model
     model_path = "resnet50_weights/resnet50_coco_v0.2.0.h5"
     # load retinanet model
