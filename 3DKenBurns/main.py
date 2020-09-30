@@ -25,7 +25,7 @@ centershift_x = 0  # centershift in x direction; 0 means zoom to the image cente
 centershift_y = 0  # centershift in y direction
 step_background = 2  # pixel step between animation frames, for faster zooming
 step_object = 2  # additional object zooming speed to background; absolute object speed = step back + step object
-frameCount = 25  # Frames created in novel view synthesis; 25 frames for 25 fps video results in a 1 second zoom in
+frame_count = 25  # Frames created in novel view synthesis; 25 frames for 25 fps video results in a 1 second zoom in
 # and 1 second zoom back video = 2 sec video length
 
 
@@ -115,7 +115,7 @@ cv2.imwrite(inpaint_path, inpainted_image)
 multiobj_list, vis_mask_list = novelView.add_parallax_masks(imgInput=npyImgL, imgBack=inpainted_image,
                                                             mask_list=mask_sorted, centershift_x=centershift_x,
                                                             step_obj=step_object, step_back=step_background,
-                                                            frames=frameCount)
+                                                            frames=frame_count)
 
 ###############################################
 # Animate Clip from picture list
